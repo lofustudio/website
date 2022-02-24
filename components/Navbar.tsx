@@ -21,7 +21,12 @@ import {
   PopoverBody,
   PopoverCloseButton,
   ButtonGroup,
-  Avatar
+  Avatar,
+  VStack,
+  Menu,
+  MenuButton,
+  MenuIcon,
+  Image
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import useMediaQuery from "../hook/useMediaQuery";
@@ -33,7 +38,6 @@ import { useSession, signOut, signIn } from "next-auth/react";
 export default function Navbar({ enableTransition }) {
   const isLargerThan768 = useMediaQuery(768);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { data: session } = useSession();
 
   const { colorMode, toggleColorMode } = useColorMode()
@@ -49,7 +53,8 @@ export default function Navbar({ enableTransition }) {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader borderBottomWidth="1px">
-            lofu.studio
+            <Image w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
+
           </DrawerHeader>
           <DrawerBody>
             <Stack spacing="24px">
@@ -92,14 +97,12 @@ export default function Navbar({ enableTransition }) {
           justifyContent="space-between"
           alignItems="center"
           width="100%"
-          px="3vw"
+          px="4vw"
           py="3"
           borderBottom="0.5px solid borderColor"
         >
           <NextLink href="/">
-            <a>
-              <Text fontSize='lg' fontWeight={'bold'}>Lofu</Text>
-            </a>
+            <Image w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
           </NextLink>
           {isLargerThan768 ? (
             <Box>
@@ -144,11 +147,9 @@ export default function Navbar({ enableTransition }) {
                   </PopoverContent>
                 </Popover>
               ) : (
-                <NextLink href={'/api/auth/signin'} passHref>
-                  <Button as="a" variant={"solid"} p="4" ml="3vw" fontSize={'16px'}>
-                    Sign In
-                  </Button>
-                </NextLink>
+                <Button as="a" variant={"solid"} p="4" ml="3vw" fontSize={'16px'} onClick>
+                  Sign In
+                </Button>
               )}
               <Button
                 variant="ghost"
@@ -169,32 +170,15 @@ export default function Navbar({ enableTransition }) {
                 fontSize={"16px"}
               >
                 {session ? (
-                  <Popover
-                    placement='left'
-                    closeOnBlur={false}
-                  >
-                    <PopoverTrigger>
-                      <Avatar as='a' size="sm" name={session.user.name} src={session.user.image} />
-                    </PopoverTrigger>
-                    <PopoverContent>
-                      <PopoverArrow />
-                      <PopoverCloseButton />
-                      <PopoverBody>
-                        <ButtonGroup spacing={4}>
-                          <Button variant={"solid"} onClick={() => signOut({ callbackUrl: '/', redirect: true })}>Sign Out</Button>
-                          <NextLink href={"/profile"} passHref>
-                            <Button variant={"solid"}>
-                              Profile
-                            </Button>
-                          </NextLink>
-                        </ButtonGroup>
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Popover>
+                  <Menu>
+                    <MenuButton as={Image} boxSize='2rem' borderRadius='full' src={session.user.image} mr='12px' />
+                  </Menu>
                 ) : (
-                  <NextLink href={'/api/auth/signin'} passHref>
-                    <VscAccount />
-                  </NextLink>
+                  <Menu>
+                    <MenuButton as={VscAccount} onClick={() => {
+                      signIn("discord")
+                    }} />
+                  </Menu>
                 )}
               </Button>
               <Button
