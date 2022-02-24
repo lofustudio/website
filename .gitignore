@@ -1,4 +1,4 @@
 .env
 yarn.lock
-/build
+/.next
 /node_modules
