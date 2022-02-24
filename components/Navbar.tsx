@@ -147,7 +147,7 @@ export default function Navbar({ enableTransition }) {
                   </PopoverContent>
                 </Popover>
               ) : (
-                <Button as="a" variant={"solid"} p="4" ml="3vw" fontSize={'16px'} onClick>
+                <Button as="a" variant={"solid"} p="4" ml="3vw" fontSize={'16px'} onClick={() => { signIn("discord") }}>
                   Sign In
                 </Button>
               )}
