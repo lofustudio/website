@@ -38,6 +38,14 @@ const components = {
         bg: mode('white', '#111111')(props),
       },
     }),
+  },
+
+  Model: {
+    baseStyle: props => ({
+      dialog: {
+        bg: mode('white', '#111111')(props),
+      },
+    }),
   }
 };
 

@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   Box,
-  Text,
   Slide,
   useDisclosure,
   Drawer,
@@ -14,40 +13,101 @@ import {
   DrawerBody,
   Stack,
   useColorMode,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  ButtonGroup,
+  Image,
   Avatar,
+  Center,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  SimpleGrid,
   VStack,
-  Menu,
-  MenuButton,
-  MenuIcon,
-  Image
+  Text
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import useMediaQuery from "../hook/useMediaQuery";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs"
-import { VscAccount } from "react-icons/vsc";
 import { useSession, signOut, signIn } from "next-auth/react";
 
 export default function Navbar({ enableTransition }) {
   const isLargerThan768 = useMediaQuery(768);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data: session } = useSession();
+  const { isOpen: isOpenDrawer, onOpen: onOpenDrawer, onClose: onCloseDrawer } = useDisclosure();
+  const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosure();
+  const { data: session, status } = useSession();
 
   const { colorMode, toggleColorMode } = useColorMode()
+
+  if (status === 'loading') {
+    return (
+      <Flex
+        as="header"
+        alignItems="center"
+        justifyContent="center"
+        height="100vh"
+        width="100%"
+        position="fixed"
+        top="0"
+        left="0"
+        zIndex="1"
+      >
+        <Box
+          as="span"
+          role="img"
+          aria-label="loading"
+          fontSize="32px"
+        >
+          Loading...
+        </Box>
+      </Flex>
+    );
+  }
+
+  const AccountCard = () => (
+    <>
+      <Modal onClose={onCloseModal} bg={'black'} isOpen={isOpenModal} isCentered motionPreset='slideInBottom' size={isLargerThan768 ? 'xl' : 'md'}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader />
+          <ModalCloseButton />
+          <ModalBody>
+            <SimpleGrid columns={2} spacing={4}>
+              <VStack>
+                <Avatar src={session.user.image} rounded="full" size={isLargerThan768 ? '2xl' : 'lg'} />
+                <VStack>
+                  <Text fontSize="26px" fontWeight="bold">{session.user.name}</Text>
+                  <Text fontSize="14px">{session.user.email}</Text>
+                </VStack>
+              </VStack>
+              <Center>
+                <VStack spacing={5}>
+                  <Button as="a" variant="solid" fontSize="16px">
+                    Settings
+                  </Button>
+                  <Button as="a" variant="solid" fontSize="16px" onClick={() => { signOut({ redirect: true, callbackUrl: "/" }) }}>
+                    Log out
+                  </Button>
+                </VStack>
+              </Center>
+            </SimpleGrid>
+          </ModalBody>
+          <Center>
+            <ModalFooter />
+          </Center>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 
   const NavbarDrawer = () => (
     <>
       <Drawer
-        isOpen={isOpen}
+        isOpen={isOpenDrawer}
         placement="right"
-        onClose={onClose}
+        onClose={onCloseDrawer}
       >
         <DrawerOverlay />
         <DrawerContent>
@@ -97,15 +157,15 @@ export default function Navbar({ enableTransition }) {
           justifyContent="space-between"
           alignItems="center"
           width="100%"
-          px="4vw"
-          py="3"
+          px={isLargerThan768 ? "2vw" : "4vw"}
+          py={isLargerThan768 ? "2vw" : "4vw"}
           borderBottom="0.5px solid borderColor"
         >
           <NextLink href="/">
-            <Image w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
+            <Image borderTop={'4vw'} w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
           </NextLink>
           {isLargerThan768 ? (
-            <Box>
+            <Center>
               <NextLink href={"/"} passHref>
                 <Button as="a" variant={"ghost"} p="4" ml="3vw" fontSize={"16px"}>
                   Home
@@ -121,36 +181,6 @@ export default function Navbar({ enableTransition }) {
                   Blog
                 </Button>
               </NextLink>
-              {session ? (
-                <Popover
-                  placement='bottom'
-                  closeOnBlur={false}
-                >
-                  <PopoverTrigger>
-                    <Button variant={'ghost'} p="4" ml="3vw" fontSize={"16px"}>
-                      <Avatar size="sm" name={session.user.name} src={session.user.image} />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverBody>
-                      <ButtonGroup spacing={4}>
-                        <Button variant={"solid"} onClick={() => signOut({ callbackUrl: '/', redirect: true })}>Sign Out</Button>
-                        <NextLink href={"/profile"} passHref>
-                          <Button variant={"solid"}>
-                            Profile
-                          </Button>
-                        </NextLink>
-                      </ButtonGroup>
-                    </PopoverBody>
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <Button as="a" variant={"solid"} p="4" ml="3vw" fontSize={'16px'} onClick={() => { signIn("discord") }}>
-                  Sign In
-                </Button>
-              )}
               <Button
                 variant="ghost"
                 p="4"
@@ -160,38 +190,40 @@ export default function Navbar({ enableTransition }) {
               >
                 {colorMode === "dark" ? <BsMoonFill /> : <BsFillSunFill />}
               </Button>
-            </Box>
+              {session ? (
+                <>
+                  <Avatar as="a" href="#" src={session.user.image} rounded="full" ml="3vw" h="64px" w="64px" onClick={onOpenModal} />
+                  <AccountCard />
+                </>
+              ) : (
+                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('discord', { callbackUrl: '/', redirect: true }) }}>
+                  Login
+                </Button>
+              )}
+            </Center>
           ) : (
-            <Box>
+            <Center>
+              {session ? (
+                <>
+                  <Avatar src={session.user.image} rounded="full" h="32px" w="32px" onClick={onOpenModal} />
+                  <AccountCard />
+                </>
+              ) : (
+                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('discord', { callbackUrl: '/', redirect: true }) }}>
+                  Login
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 p="4"
                 ml="3vw"
                 fontSize={"16px"}
-              >
-                {session ? (
-                  <Menu>
-                    <MenuButton as={Image} boxSize='2rem' borderRadius='full' src={session.user.image} mr='12px' />
-                  </Menu>
-                ) : (
-                  <Menu>
-                    <MenuButton as={VscAccount} onClick={() => {
-                      signIn("discord")
-                    }} />
-                  </Menu>
-                )}
-              </Button>
-              <Button
-                variant="ghost"
-                p="4"
-                ml="3vw"
-                fontSize={"16px"}
-                onClick={onOpen}
+                onClick={onOpenDrawer}
               >
                 <AiOutlineMenu />
               </Button>
               <NavbarDrawer />
-            </Box>
+            </Center>
           )}
         </Flex>
       </Slide>
