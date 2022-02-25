@@ -68,7 +68,7 @@ export default function Navbar({ enableTransition }) {
 
   const AccountCard = () => (
     <>
-      <Modal onClose={onCloseModal} bg={'black'} isOpen={isOpenModal} isCentered motionPreset='slideInBottom' size={isLargerThan768 ? 'xl' : 'md'}>
+      <Modal onClose={onCloseModal} isOpen={isOpenModal} isCentered motionPreset='slideInBottom' size={isLargerThan768 ? 'xl' : 'md'}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader />
