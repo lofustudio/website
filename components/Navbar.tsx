@@ -25,13 +25,16 @@ import {
   ModalOverlay,
   SimpleGrid,
   VStack,
-  Text
+  Text,
+  Spinner
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import useMediaQuery from "../hook/useMediaQuery";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs"
 import { useSession, signOut, signIn } from "next-auth/react";
+import { motion } from "framer-motion";
+import { mode } from "@chakra-ui/theme-tools"
 
 export default function Navbar({ enableTransition }) {
   const isLargerThan768 = useMediaQuery(768);
@@ -60,7 +63,10 @@ export default function Navbar({ enableTransition }) {
           aria-label="loading"
           fontSize="32px"
         >
-          Loading...
+          <Center>
+            <Spinner size="xl" />
+            {console.log('Fetching session...')}
+          </Center>
         </Box>
       </Flex>
     );
@@ -68,7 +74,7 @@ export default function Navbar({ enableTransition }) {
 
   const AccountCard = () => (
     <>
-      <Modal onClose={onCloseModal} bg={'black'} isOpen={isOpenModal} isCentered motionPreset='slideInBottom' size={isLargerThan768 ? 'xl' : 'md'}>
+      <Modal onClose={onCloseModal} isOpen={isOpenModal} isCentered motionPreset='slideInBottom' size={'lg'}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader />
@@ -84,12 +90,22 @@ export default function Navbar({ enableTransition }) {
               </VStack>
               <Center>
                 <VStack spacing={5}>
-                  <Button as="a" variant="solid" fontSize="16px">
-                    Settings
-                  </Button>
-                  <Button as="a" variant="solid" fontSize="16px" onClick={() => { signOut({ redirect: true, callbackUrl: "/" }) }}>
-                    Log out
-                  </Button>
+                  <motion.a
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 1 }}
+                  >
+                    <Button as="a" variant="solid" fontSize="16px">
+                      Settings
+                    </Button>
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 1 }}
+                  >
+                    <Button as="a" variant="solid" fontSize="16px" onClick={() => { signOut({ redirect: true, callbackUrl: "/" }) }}>
+                      Log out
+                    </Button>
+                  </motion.a>
                 </VStack>
               </Center>
             </SimpleGrid>
@@ -112,9 +128,8 @@ export default function Navbar({ enableTransition }) {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">
+          <DrawerHeader borderColor={colorMode === 'light' ? '#000000' : '#FFFFFF'} borderBottomWidth="1px">
             <Image w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
-
           </DrawerHeader>
           <DrawerBody>
             <Stack spacing="24px">
@@ -157,7 +172,7 @@ export default function Navbar({ enableTransition }) {
           justifyContent="space-between"
           alignItems="center"
           width="100%"
-          px={isLargerThan768 ? "2vw" : "4vw"}
+          px={isLargerThan768 ? "4vw" : "4vw"}
           py={isLargerThan768 ? "2vw" : "4vw"}
           borderBottom="0.5px solid borderColor"
         >
@@ -192,7 +207,7 @@ export default function Navbar({ enableTransition }) {
               </Button>
               {session ? (
                 <>
-                  <Avatar as="a" href="#" src={session.user.image} rounded="full" ml="3vw" h="64px" w="64px" onClick={onOpenModal} />
+                  <Avatar as="a" href="#" src={session.user.image} rounded="full" ml="3vw" h="32px" w="32px" onClick={onOpenModal} />
                   <AccountCard />
                 </>
               ) : (

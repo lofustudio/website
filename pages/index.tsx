@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { Stack } from '@chakra-ui/react'
 import Container from '../components/Container'
+import Introduction from '../components/Introduction'
 
 const IndexPage = () => (
   <>
@@ -13,10 +14,11 @@ const IndexPage = () => (
         as="main"
         spacing="144px"
         justifyContent="center"
-        alignItems="flex-start"
+        alignItems="center"
         px={{ base: '5vw', md: '10vw' }}
         mt={{ base: '15vh', md: '22.5vh' }}
       >
+        <Introduction />
       </Stack>
     </Container>
   </>

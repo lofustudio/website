@@ -10,3 +10,15 @@ const nextConfig = {
         return config;
     },
 };
+
+module.exports = {
+    async redirects() {
+        return [
+            {
+                source: '/discord',
+                destination: '/404',
+                permanent: true,
+            },
+        ]
+    },
+}
