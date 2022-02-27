@@ -2,14 +2,15 @@ import { Heading, Stack, Center, SimpleGrid, Image, Flex, Button } from '@chakra
 import { AiOutlineGithub, AiOutlineInstagram, AiOutlineMail, AiOutlineTwitter } from "react-icons/ai"
 import { FaDiscord, FaTwitch } from "react-icons/fa"
 import NextLink from 'next/link';
+import { useColorMode } from '@chakra-ui/react';
 import useMediaQuery from '../hook/useMediaQuery';
 
 export default function Introduction() {
-    const isLargerThan800 = useMediaQuery(800);
     const isLargerThan767 = useMediaQuery(767);
     const isLargerThan600 = useMediaQuery(600);
     const isLargerThan1100 = useMediaQuery(1100);
-    const isLargerThan1275 = useMediaQuery(1275);
+
+    const { colorMode } = useColorMode();
 
     return (
         <>
@@ -26,7 +27,7 @@ export default function Introduction() {
                         </Heading>
                     </Center>
                     <Center>
-                        <Image src={'https://i.imgur.com/MJOdmkv.gif'} w={isLargerThan1100 ? '256px' : '128px'} h={isLargerThan1100 ? '256px' : '128px'} />
+                        <Image src={colorMode === 'light' ? 'https://i.imgur.com/rhEkEGr.gif' : 'https://i.imgur.com/MJOdmkv.gif'} w={isLargerThan1100 ? '256px' : '128px'} h={isLargerThan1100 ? '256px' : '128px'} />
                     </Center>
                     <Center>
                         <Heading fontSize={'display'}>
