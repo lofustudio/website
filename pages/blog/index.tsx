@@ -1,27 +1,58 @@
 import Head from 'next/head'
-import { Stack } from '@chakra-ui/react'
+import { Box, Center, Flex, Spinner, Stack } from '@chakra-ui/react'
 import Container from '../../components/Container'
-import Introduction from '../../components/Introduction'
+import { useSession } from 'next-auth/react';
 
-const IndexPage = () => (
-  <>
-    <Container enableTransition={true}>
-      <Head>
-        <title>lofu.studio</title>
-        <meta name="title" content="lofu.studio" />
-      </Head>
-      <Stack
-        as="main"
-        spacing="144px"
-        justifyContent="center"
-        alignItems="center"
-        px={{ base: '5vw', md: '10vw' }}
-        mt={{ base: '15vh', md: '22.5vh' }}
-      >
-        
-      </Stack>
-    </Container>
-  </>
-)
+export default function BlogIndex() {
+  const { data: session, status } = useSession();
+  
+  if (status === 'loading') {
+    return (
+      <>
+        <Flex
+          as="header"
+          alignItems="center"
+          justifyContent="center"
+          height="100vh"
+          width="100%"
+          position="fixed"
+          top="0"
+          left="0"
+          zIndex="99"
+        >
+          <Box
+            as="span"
+            role="img"
+            aria-label="loading"
+            fontSize="32px"
+          >
+            <Center>
+              <Spinner size="xl" />
+            </Center>
+          </Box>
+        </Flex>
+      </>
+    )
 
-export default IndexPage
+    return (
+      <>
+        <Container enableTransition={true}>
+          <Head>
+            <title>lofu.studio</title>
+            <meta name="title" content="lofu.studio" />
+          </Head>
+          <Stack
+            as="main"
+            spacing="144px"
+            justifyContent="center"
+            alignItems="center"
+            px={{ base: '5vw', md: '10vw' }}
+            mt={{ base: '15vh', md: '22.5vh' }}
+          >
+            
+          </Stack>
+        </Container>
+      </>
+    )
+  }
+}
