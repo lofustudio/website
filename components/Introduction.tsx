@@ -16,7 +16,7 @@ export default function Introduction() {
         <>
             <Stack>
                 <Center>
-                    <Heading fontSize={'display2'} mb="3vw">
+                    <Heading fontSize={'display2'} mb={{ base: "10px", md: "3vw" }}>
                         We are...
                     </Heading>
                 </Center>
@@ -27,7 +27,7 @@ export default function Introduction() {
                         </Heading>
                     </Center>
                     <Center>
-                        <Image src={colorMode === 'light' ? 'https://i.imgur.com/rhEkEGr.gif' : 'https://i.imgur.com/MJOdmkv.gif'} w={isLargerThan1100 ? '256px' : '128px'} h={isLargerThan1100 ? '256px' : '128px'} />
+                        <Image src={colorMode === 'light' ? 'https://i.imgur.com/aeUkZeH.gif' : 'https://i.imgur.com/i1fl6pR.gif'} w={isLargerThan1100 ? '256px' : '128px'} h={isLargerThan1100 ? '256px' : '128px'} />
                     </Center>
                     <Center>
                         <Heading fontSize={'display'}>
@@ -37,32 +37,32 @@ export default function Introduction() {
                 </SimpleGrid>
                 <SimpleGrid pt="8%" columns={isLargerThan1100 ? 6 : 3} spacing={'5vw'}>
                     <NextLink href='https://github.com/lofustudio' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<AiOutlineGithub />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<AiOutlineGithub />} size={isLargerThan600 ? "md" : "sm"}>
                             GitHub
                         </Button>
                     </NextLink>
                     <NextLink href='https://twitter.com/lofustudio' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<AiOutlineTwitter />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<AiOutlineTwitter />} size={isLargerThan600 ? "md" : "sm"}>
                             Twitter
                         </Button>
                     </NextLink>
                     <NextLink href='https://instagram.com/lofustudio' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<AiOutlineInstagram />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<AiOutlineInstagram />} size={isLargerThan600 ? "md" : "sm"}>
                             Instagram
                         </Button>
                     </NextLink>
                     <NextLink href='https://lofu.studio/discord' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<FaDiscord />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<FaDiscord />} size={isLargerThan600 ? "md" : "sm"}>
                             Discord
                         </Button>
                     </NextLink>
                     <NextLink href='https://twitch.tv/lofustudio' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<FaTwitch />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<FaTwitch />} size={isLargerThan600 ? "md" : "sm"}>
                             Twitch
                         </Button>
                     </NextLink>
                     <NextLink href='mailto:hello@lofu.studio' passHref>
-                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? '2xl' : '5xl'} leftIcon={<AiOutlineMail />} size={isLargerThan600 ? "md" : "sm"}>
+                        <Button as="a" variant="solid" fontSize={isLargerThan1100 ? 'xl' : '4xl'} leftIcon={<AiOutlineMail />} size={isLargerThan600 ? "md" : "sm"}>
                             E-Mail
                         </Button>
                     </NextLink>
