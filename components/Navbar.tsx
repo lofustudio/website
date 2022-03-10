@@ -26,7 +26,10 @@ import {
   SimpleGrid,
   VStack,
   Text,
-  Spinner
+  Spinner,
+  Heading,
+  CloseButton,
+  Divider
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import useMediaQuery from "../hook/useMediaQuery";
@@ -34,7 +37,6 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { BsMoonFill, BsFillSunFill } from "react-icons/bs"
 import { useSession, signOut, signIn } from "next-auth/react";
 import { motion } from "framer-motion";
-import { mode } from "@chakra-ui/theme-tools"
 
 export default function Navbar({ enableTransition }) {
   const isLargerThan768 = useMediaQuery(768);
@@ -46,29 +48,9 @@ export default function Navbar({ enableTransition }) {
 
   if (status === 'loading') {
     return (
-      <Flex
-        as="header"
-        alignItems="center"
-        justifyContent="center"
-        height="100vh"
-        width="100%"
-        position="fixed"
-        top="0"
-        left="0"
-        zIndex="1"
-      >
-        <Box
-          as="span"
-          role="img"
-          aria-label="loading"
-          fontSize="32px"
-        >
-          <Center>
-            <Spinner size="xl" />
-            {console.log('Fetching session...')}
-          </Center>
-        </Box>
-      </Flex>
+      <>
+        <div />
+      </>
     );
   }
 
@@ -80,35 +62,35 @@ export default function Navbar({ enableTransition }) {
           <ModalHeader />
           <ModalCloseButton />
           <ModalBody>
-            <SimpleGrid columns={2} spacing={4}>
+            <VStack>
+              <Avatar src={session.user.image} rounded="full" size={isLargerThan768 ? '2xl' : 'lg'} />
               <VStack>
-                <Avatar src={session.user.image} rounded="full" size={isLargerThan768 ? '2xl' : 'lg'} />
-                <VStack>
-                  <Text fontSize="26px" fontWeight="bold">{session.user.name}</Text>
-                  <Text fontSize="14px">{session.user.email}</Text>
-                </VStack>
+                <Text fontSize="26px" fontWeight="bold">{session.user.name}</Text>
+                <Text fontSize="14px">{session.user.email}</Text>
               </VStack>
-              <Center>
-                <VStack spacing={5}>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 1 }}
-                  >
+            </VStack>
+            <Center>
+              <SimpleGrid columns={2} spacing={5} mt={{ base: '6vw', sm: '4vw', md: '2vw' }}>
+                <motion.a
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 1 }}
+                >
+                  <NextLink href="/account" passHref>
                     <Button as="a" variant="solid" fontSize="16px">
-                      Settings
+                      Account
                     </Button>
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 1 }}
-                  >
-                    <Button as="a" variant="solid" fontSize="16px" onClick={() => { signOut({ redirect: true, callbackUrl: "/" }) }}>
-                      Log out
-                    </Button>
-                  </motion.a>
-                </VStack>
-              </Center>
-            </SimpleGrid>
+                  </NextLink>
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 1 }}
+                >
+                  <Button as="a" variant="solid" fontSize="16px" onClick={() => { signOut({ redirect: true }) }}>
+                    Log out
+                  </Button>
+                </motion.a>
+              </SimpleGrid>
+            </Center>
           </ModalBody>
           <Center>
             <ModalFooter />
@@ -129,11 +111,11 @@ export default function Navbar({ enableTransition }) {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader borderColor={colorMode === 'light' ? '#000000' : '#FFFFFF'} borderBottomWidth="1px">
-            <Image w="48px" h="48px" src={colorMode === 'light' ? 'https://i.imgur.com/8f6X3H8.png' : 'https://i.imgur.com/DnfgdWr.png'} />
+              <Heading fontSize={'7xl'}>&lt;/lofu&gt;</Heading>
           </DrawerHeader>
           <DrawerBody>
             <Stack spacing="24px">
-              <NextLink href="/" passHref>
+              <NextLink href="/">
                 <Button as="a" variant="ghost" fontSize="16px">
                   Home
                 </Button>
@@ -211,8 +193,8 @@ export default function Navbar({ enableTransition }) {
                   <AccountCard />
                 </>
               ) : (
-                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('discord', { callbackUrl: '/', redirect: true }) }}>
-                  Login
+                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('github') }}>
+                  Log In
                 </Button>
               )}
             </Center>
@@ -224,8 +206,8 @@ export default function Navbar({ enableTransition }) {
                   <AccountCard />
                 </>
               ) : (
-                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('discord', { callbackUrl: '/', redirect: true }) }}>
-                  Login
+                <Button p="4" ml="3vw" fontSize={"16px"} onClick={() => { signIn('github') }}>
+                  Log In
                 </Button>
               )}
               <Button

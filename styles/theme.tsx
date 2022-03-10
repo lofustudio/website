@@ -23,6 +23,33 @@ const styles = {
   }),
 };
 
+const components = {
+  Drawer: {
+    // setup light/dark mode component defaults
+    baseStyle: props => ({
+      dialog: {
+        bg: mode('white', '#111111')(props),
+      },
+    }),
+  },
+
+  Menu: {
+    baseStyle: props => ({
+      list: {
+        bg: mode('white', '#111111')(props),
+      },
+    }),
+  },
+
+  Modal: {
+    baseStyle: props => ({
+      dialog: {
+        bg: mode('white', '#111111')(props),
+      }
+    })
+  }
+};
+
 const fonts = {
   ...chakraTheme.fonts,
   body: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
@@ -43,6 +70,7 @@ const overrides = {
   config,
   fonts,
   breakpoints,
+  components,
   fontWeights: {
     normal: 300,
     medium: 600,

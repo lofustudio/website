@@ -1,10 +1,9 @@
 import Head from 'next/head'
 import { Box, Center, Flex, Spinner, Stack } from '@chakra-ui/react'
-import Container from '../components/Container'
-import Introduction from '../components/Introduction'
+import Container from '../../components/Container'
 import { useSession } from 'next-auth/react';
 
-export default function IndexPage() {
+export default function BlogIndex() {
   const { data: session, status } = useSession();
   
   if (status === 'loading') {
@@ -34,10 +33,9 @@ export default function IndexPage() {
         </Flex>
       </>
     )
-  }
-  
+
     return (
-        <>
+      <>
         <Container enableTransition={true}>
           <Head>
             <title>lofu.studio</title>
@@ -51,9 +49,10 @@ export default function IndexPage() {
             px={{ base: '5vw', md: '10vw' }}
             mt={{ base: '15vh', md: '22.5vh' }}
           >
-            <Introduction />
+            
           </Stack>
         </Container>
       </>
-  )
+    )
+  }
 }
