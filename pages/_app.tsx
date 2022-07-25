@@ -1,25 +1,15 @@
-import Head from 'next/head'
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
-import { SessionProvider } from "next-auth/react"
 import type { AppProps } from 'next/app'
+import { ChakraProvider } from '@chakra-ui/react';
 
-import customTheme from '../styles/theme'
+import "../styles/styles.css";
+import customTheme from '../styles/globalTheme';
 
-function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <Head>
-        <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-      </Head>
-      <SessionProvider session={session}>
-        <ColorModeScript initialColorMode={customTheme.config.initialColorMode} />
-        <ChakraProvider theme={customTheme}>
-          <Component {...pageProps} />
-        </ChakraProvider>
-      </SessionProvider>
-    </>
+    <ChakraProvider theme={customTheme}>
+      <Component {...pageProps} />
+    </ChakraProvider>
   )
 }
 
-export default App
+export default MyApp

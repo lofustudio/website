@@ -1,59 +1,77 @@
-import Head from 'next/head'
-import { Box, Center, Flex, Spinner, Stack } from '@chakra-ui/react'
-import Container from '../components/Container'
-import Introduction from '../components/Introduction'
-import { useSession } from 'next-auth/react';
+import { Button, ButtonGroup, Center, Heading, Image, Link, SimpleGrid, Stack, Text, useColorMode } from '@chakra-ui/react'
+import useMediaQuery from '../hooks/useMediaQuery'
+import type { NextPage } from 'next'
+import Container from '../Components/Container'
+import { AiFillGithub } from "react-icons/ai";
+import { FaDiscord, FaTwitter, FaInstagram, FaTwitch, FaYoutube } from "react-icons/fa";
 
-export default function IndexPage() {
-  const { data: session, status } = useSession();
-  
-  if (status === 'loading') {
-    return (
-      <>
-        <Flex
-          as="header"
-          alignItems="center"
-          justifyContent="center"
-          height="100vh"
-          width="100%"
-          position="fixed"
-          top="0"
-          left="0"
-          zIndex="99"
-        >
-          <Box
-            as="span"
-            role="img"
-            aria-label="loading"
-            fontSize="32px"
-          >
+const Home: NextPage = () => {
+  const { colorMode } = useColorMode();
+  const isLargerThan1100 = useMediaQuery(1100);
+  const isLargerThan768 = useMediaQuery(768);
+  return (
+    <>
+      <Container>
+        <Stack spacing={16} alignItems={"center"} mt={"6vh"}>
+          <Center>
+            <Heading fontSize={"display3"}>
+              We are
+            </Heading>
+          </Center>
+          <SimpleGrid columns={3} alignContent={"center"} alignItems={"center"}>
             <Center>
-              <Spinner size="xl" />
+              <Heading fontSize={"display2"}>
+                Lofu
+              </Heading>
             </Center>
-          </Box>
-        </Flex>
-      </>
-    )
-  }
-  
-    return (
-        <>
-        <Container enableTransition={true}>
-          <Head>
-            <title>lofu.studio</title>
-            <meta name="title" content="lofu.studio" />
-          </Head>
-          <Stack
-            as="main"
-            spacing="144px"
-            justifyContent="center"
-            alignItems="center"
-            px={{ base: '5vw', md: '10vw' }}
-            mt={{ base: '15vh', md: '22.5vh' }}
-          >
-            <Introduction />
-          </Stack>
-        </Container>
-      </>
+            <Center>
+              <Image src={colorMode === "dark" ? "https://i.imgur.com/i1fl6pR.gif" : "https://i.imgur.com/aeUkZeH.gif"} w={"255px"} h={"256px"} />
+            </Center>
+            <Center>
+              <Heading fontSize={"display2"}>
+                Studio
+              </Heading>
+            </Center>
+          </SimpleGrid>
+          <Text fontSize={"display3"}>
+            Making cool shit that performs.
+          </Text>
+          <ButtonGroup spacing={8}>
+            <Link href={"https://lofu.studio/github"} isExternal>
+              <Button leftIcon={<AiFillGithub />} p={4}>
+                Github
+              </Button>
+            </Link>
+            <Link href={"https://lofu.studio/discord"} isExternal>
+              <Button leftIcon={<FaDiscord />} p={4}>
+                Discord
+              </Button>
+            </Link>
+            <Link href={"https://lofu.studio/twitter"} isExternal>
+              <Button leftIcon={<FaTwitter />} p={4}>
+                Twitter
+              </Button>
+            </Link>
+            <Link href={"https://lofu.studio/instagram"} isExternal>
+              <Button leftIcon={<FaInstagram />} p={4}>
+                Instagram
+              </Button>
+            </Link>
+            <Link href={"https://lofu.studio/twitch"} isExternal>
+              <Button leftIcon={<FaTwitch />} p={4}>
+                Twitch
+              </Button>
+            </Link>
+            <Link href={"https://lofu.studio/youtube"} isExternal>
+              <Button leftIcon={<FaYoutube />} p={4}>
+                Youtube
+              </Button>
+            </Link>
+          </ButtonGroup>
+        </Stack>
+      </Container>
+    </>
   )
 }
+
+export default Home

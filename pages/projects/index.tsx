@@ -1,58 +1,40 @@
-import Head from 'next/head'
-import { Box, Center, Flex, Spinner, Stack } from '@chakra-ui/react'
-import Container from '../../components/Container'
-import { useSession } from 'next-auth/react'
+import { Heading, Stack, useColorMode, Text, InputGroup, Input, InputRightElement } from '@chakra-ui/react';
+import type { NextPage } from 'next';
+import { useState } from 'react';
+import Container from '../../Components/Container';
+import { FaSearch } from "react-icons/fa";
+import Head from 'next/head';
 
-export default function ProjectsPage() {
-  const { data: session, status } = useSession();
-  
-  if (status === 'loading') {
+const ProjectPage: NextPage = () => {
+    const { colorMode } = useColorMode();
+    const [query, setQuery] = useState("");
     return (
-      <>
-        <Flex
-          as="header"
-          alignItems="center"
-          justifyContent="center"
-          height="100vh"
-          width="100%"
-          position="fixed"
-          top="0"
-          left="0"
-          zIndex="99"
-        >
-          <Box
-            as="span"
-            role="img"
-            aria-label="loading"
-            fontSize="32px"
-          >
-            <Center>
-              <Spinner size="xl" />
-            </Center>
-          </Box>
-        </Flex>
-      </>
+        <>
+            <Head>
+                <title>
+                    Projects
+                </title>
+            </Head>
+            <Container>
+                <Stack spacing={16} alignItems={"flex-start"}>
+                    <Stack align={"flex-start"}>
+                        <Heading fontSize={"5xl"}>
+                            Projects
+                        </Heading>
+                        <Text fontSize={"2xl"}>
+                            A full list of all projects we have created or worked on.
+                        </Text>
+                        <InputGroup maxW={"350px"}>
+                            <InputRightElement pointerEvents={"none"}>
+                                <FaSearch />
+                            </InputRightElement>
+                            <Input placeholder="Search" type={"search"} value={query} onChange={(e) => setQuery(e.target.value)} />
+                        </InputGroup>
+                    </Stack>
+                </Stack>
+            </Container>
+        </>
     )
-  }
-  
-    return (
-      <>
-        <Container enableTransition={true}>
-          <Head>
-            <title>lofu.studio</title>
-            <meta name="title" content="lofu.studio" />
-          </Head>
-          <Stack
-            as="main"
-            spacing="144px"
-            justifyContent="center"
-            alignItems="center"
-            px={{ base: '5vw', md: '10vw' }}
-            mt={{ base: '15vh', md: '22.5vh' }}
-          >
-            
-          </Stack>
-        </Container>
-      </>
-  )
 }
+
+export default ProjectPage;

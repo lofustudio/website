@@ -1,23 +1,19 @@
-import React from 'react'
-import { Flex, Stack, Box, Text } from '@chakra-ui/react'
-import Navbar from './Navbar'
+import { Flex } from "@chakra-ui/react";
+import React from "react";
+import Nav from "./Nav";
 
-const Container = ({ enableTransition, children }) => {
-  return (
-    <>
-      <Navbar enableTransition={enableTransition} />
-      <Flex as="main" justifyContent="center" flexDirection="column">
-        {children}
-      </Flex>
-      <Box as="footer" role="contentinfo" mx="auto" maxW="7xl" py="12" px={{ base: '4', md: '8' }}>
-        <Stack>
-          {/* <Text color="textPrimary" alignSelf={'center'}>
-            © {new Date().getFullYear()} Lofu Studio
-          </Text> */}
-        </Stack>
-      </Box>
-    </>
-  )
+export default function Container({ children }: { children: React.ReactNode }) {
+    return (
+        <>
+            <Nav />
+            <Flex
+                justifyContent={"flex-start"}
+                flexDirection={"column"}
+                py={["10vh", "10vh", "16vh", "16vh"]}
+                px={["4vw", "4vw", "8vw", "8vw"]}
+            >
+                {children}
+            </Flex>
+        </>
+    )
 }
-
-export default Container
