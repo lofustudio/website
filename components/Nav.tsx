@@ -15,7 +15,7 @@ export default function Nav() {
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
-                px={"2vw"}
+                px={["4vw", "4vw", "2vw"]}
                 py={{ base: "1.5vh", md: "3vh" }}
                 backgroundColor={colorMode === "light" ? "rgba(245, 245, 247, 0.9)" : "rgba(0, 0, 0, 0.9)"}
                 backdropFilter="blur(5px)"

@@ -16,7 +16,8 @@ const fluidType = (minFont: number, maxFont: number) => {
 
 const colors = {
     "heading": "#FFFFFF",
-    "headingSecondary": "#8F9094"
+    "text": "#8F9094",
+    "tiny": "#7F8290"
 }
 
 const styles = {

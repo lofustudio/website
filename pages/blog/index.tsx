@@ -17,7 +17,7 @@ const BlogPage: NextPage = () => {
             </Head>
             <Container>
                 <Stack spacing={16} alignItems={"flex-start"}>
-                    <Stack align={"flex-start"}>
+                    <Stack align={"flex-start"} spacing={2}>
                         <Heading fontSize={"5xl"}>
                             Blog
                         </Heading>
