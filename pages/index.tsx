@@ -10,7 +10,6 @@ const Home: NextPage = () => {
       <Container>
         <Stack spacing={64}>
           <Splash />
-          <Intro />
         </Stack>
       </Container>
     </>
