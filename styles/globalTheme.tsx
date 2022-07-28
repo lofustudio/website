@@ -17,7 +17,7 @@ const fluidType = (minFont: number, maxFont: number) => {
 const colors = {
     "heading": "#FFFFFF",
     "text": "#8F9094",
-    "tiny": "#7F8290"
+    "lightText": "#7F8290"
 }
 
 const styles = {
@@ -92,7 +92,7 @@ const overrides = {
     fontSizes: {
         display: fluidType(144, 288),
         display2: fluidType(80, 144),
-        display3: fluidType(24, 36),
+        display3: fluidType(36, 48),
     },
 };
 

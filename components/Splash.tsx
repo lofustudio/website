@@ -8,9 +8,9 @@ export default function OldSplash() {
     return (
         <>
             <Stack spacing={16} alignItems={"center"} mt={"5vh"}>
-                <Stack justifyContent={"center"} alignItems={"center"}>
+                <Stack justifyContent={"center"} alignItems={"center"} mt={isLargerThan768 ? "" : "10vh"}>
                     <Center>
-                        <Image src={colorMode === "dark" ? "/assets/dark.png" : "/assets/light.png"} w={isLargerThan768 ? "350px" : "128px"} h={isLargerThan768 ? "350px" : "128px"} />
+                        <Image src={colorMode === "dark" ? "/assets/dark.png" : "/assets/light.png"} w={isLargerThan768 ? "350px" : "250px"} h={isLargerThan768 ? "350px" : "250px"} />
                     </Center>
                     <Heading fontSize={"display2"} textAlign={"center"}>
                         Lofu Studio
